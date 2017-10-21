@@ -1,5 +1,5 @@
 sudo: required
-
+language: go
 services:
   - docker
 
@@ -14,7 +14,7 @@ after_failure:
   - docker logs asciidoc-to-html
 
 after_success:
-  - cd output ; mv README.html index.html
+  - mv output/README.html output/index.html
 
 deploy:
   provider: pages
