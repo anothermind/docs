@@ -1,0 +1,26 @@
+= Another Mind
+:toc
+
+== Background
+
+== Overall System Structure
+
+=== Nerve System
+
+=== Organs
+
+==== General Organ structure
+
+==== Organ categories
+
+===== Senses
+
+===== Limbs
+
+===== Reflex
+
+===== Ability
+
+===== Memory
+
+===== Convolutions
