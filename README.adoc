@@ -6,10 +6,8 @@
 
 == Overall System Structure
 
-[plantuml]
+[plantuml, system-structure, png]
 ....
-@startuml
-
 package "Nerve System" {
     database MQTT
 }
@@ -39,7 +37,6 @@ package "Organs" {
     }
 }
 
-@enduml
 ....
 
 === Nerve System
