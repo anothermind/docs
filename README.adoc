@@ -6,6 +6,42 @@
 
 == Overall System Structure
 
+[plantuml]
+....
+@startuml
+
+package "Nerve System" {
+    database MQTT
+}
+
+package "Organs" {
+    package "Limbs" {
+        [Limb1] <--> MQTT
+        [Limb2] <--> MQTT
+    }
+    package "Senses" {
+        [Sense1] <--> MQTT
+        [Sense2] <--> MQTT
+    }
+    package "Brain" {
+        package "Reflexes" {
+            [Reflex1] <--> MQTT
+            [Reflex2] <--> MQTT
+        }
+        package "Abilities" {
+            [Ability1] <--> MQTT
+            [Ability2] <--> MQTT
+        }
+        package "Convolutions" {
+            [Convolution1] <--> MQTT
+            [Convolution2] <--> MQTT
+        }
+    }
+}
+
+@enduml
+....
+
 === Nerve System
 
 === Organs
