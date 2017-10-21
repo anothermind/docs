@@ -1,5 +1,6 @@
 = Another Mind
 :toc:
+:toclevels: 5
 
 == Background
 
