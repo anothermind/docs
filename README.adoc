@@ -6,7 +6,7 @@
 
 == Overall System Structure
 
-[plantuml, system-structure, png]
+[plantuml]
 ....
 package "Nerve System" {
     database MQTT
