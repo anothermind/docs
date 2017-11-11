@@ -13,14 +13,20 @@ package "Nerve System" {
 }
 
 package "Organs" {
-    package "Limbs" {
-        [Limb1] <--> MQTT
-        [Limb2] <--> MQTT
+    package "General organs" {
+        package "Limbs" {
+            [Limb1] <--> MQTT
+            [Limb2] <--> MQTT
+        }
+        package "Senses" {
+            [Sense1] <--> MQTT
+            [Sense2] <--> MQTT
+        }
+        package "Memory" {
+            [Memory] <--> MQTT
+        }
     }
-    package "Senses" {
-        [Sense1] <--> MQTT
-        [Sense2] <--> MQTT
-    }
+
     package "Brain" {
         package "Reflexes" {
             [Reflex1] <--> MQTT
@@ -45,16 +51,18 @@ package "Organs" {
 
 ==== General Organ structure
 
-==== Organ categories
+==== General organs
 
 ===== Senses
 
 ===== Limbs
 
+===== Memory
+
+==== Brain
+
 ===== Reflex
 
 ===== Ability
-
-===== Memory
 
 ===== Convolutions
