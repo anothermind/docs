@@ -15,7 +15,7 @@ jobs:
             - /documents/output
   deploy_github_pages:
     docker:
-      - image: asciidoctor/docker-asciidoctor
+      - image: bravissimolabs/alpine-git
     working_directory: /documents/
     steps:
       - restore_cache:
