@@ -1,12 +1,12 @@
 version: 2
 jobs:
-  build-deploy-docs:
+  build-docs:
     docker:
       - image: asciidoctor/docker-asciidoctor
     working_directory: /documents/
     branches:
       only:
-        - circle
+        - master
     steps:
       - checkout
       - run: mkdir -p output
@@ -63,10 +63,10 @@ workflows:
       build-docs:
         filters:
           branches:
-            only: circle
+            only: master
       deploy-github-pages:
         requires:
           - build-docs
         filters:
           branches:
-            only: circle
+            only: master
