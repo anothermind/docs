@@ -7,6 +7,8 @@ jobs:
     branches:
       only:
         - master
+      ignore:
+        - gh-pages
     steps:
       - checkout
       - run: mkdir -p output
@@ -23,7 +25,9 @@ jobs:
     working_directory: /documents/
     branches:
       only:
-        - circle
+        - master
+      ignore:
+        - gh-pages
     steps:
       - restore_cache:
         key: v1-docs-output-{{ .Environment.CIRCLE_SHA1 }}
@@ -64,9 +68,11 @@ workflows:
         filters:
           branches:
             only: master
+            ignore: gh-pages
       deploy-github-pages:
         requires:
           - build-docs
         filters:
           branches:
             only: master
+            ignore: gh-pages
