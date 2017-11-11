@@ -1,60 +1,60 @@
 version: 2.0
 jobs:
-  - build_docs:
-      docker:
-        - image: asciidoctor/docker-asciidoctor
-      working_directory: /documents/
-      branches:
-        only: master
-        ignore: gh-pages
-      steps:
-        - checkout
-        - run: mkdir -p output
-        - run: asciidoctor -r asciidoctor-diagram -D /documents/output *.adoc
-        - run: mv output/README.html output/index.html
-        - save_cache:
-            key: v1-docs-output-{{ .Environment.CIRCLE_SHA1 }}
-            paths:
-              - /documents/output
-  - deploy_github_pages:
-      docker:
-        - image: asciidoctor/docker-asciidoctor
-      working_directory: /documents/
-      branches:
-        only: master
-        ignore: gh-pages
-      steps:
-        - restore_cache:
-            key: v1-docs-output-{{ .Environment.CIRCLE_SHA1 }}
-        - deploy:
-            command: |
-              pwd
-              remote=$(git config remote.origin.url)
-              described_rev=$(git rev-parse HEAD | git name-rev --stdin)
-              pages_dir="/documents/output"
+  build_docs:
+    docker:
+      - image: asciidoctor/docker-asciidoctor
+    working_directory: /documents/
+    branches:
+      only: master
+      ignore: gh-pages
+    steps:
+      - checkout
+      - run: mkdir -p output
+      - run: asciidoctor -r asciidoctor-diagram -D /documents/output *.adoc
+      - run: mv output/README.html output/index.html
+      - save_cache:
+          key: v1-docs-output-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - /documents/output
+  deploy_github_pages:
+    docker:
+      - image: asciidoctor/docker-asciidoctor
+    working_directory: /documents/
+    branches:
+      only: master
+      ignore: gh-pages
+    steps:
+      - restore_cache:
+          key: v1-docs-output-{{ .Environment.CIRCLE_SHA1 }}
+      - deploy:
+          command: |
+            pwd
+            remote=$(git config remote.origin.url)
+            described_rev=$(git rev-parse HEAD | git name-rev --stdin)
+            pages_dir="/documents/output"
 
-              mkdir gh-pages-branch
-              cd gh-pages-branch
-              git config --global user.email "${CIRCLE_PROJECT_USERNAME}" > /dev/null 2>&1
-              git config --global user.name "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_USERNAME}" > /dev/null 2>&1
-              git init
-              git remote add --fetch origin "$remote"
-              if git rev-parse --verify origin/gh-pages > /dev/null 2>&1
-              then
-                  git checkout gh-pages
-                  git rm -rf .
-              else
-                  git checkout --orphan gh-pages
-              fi
+            mkdir gh-pages-branch
+            cd gh-pages-branch
+            git config --global user.email "${CIRCLE_PROJECT_USERNAME}" > /dev/null 2>&1
+            git config --global user.name "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_USERNAME}" > /dev/null 2>&1
+            git init
+            git remote add --fetch origin "$remote"
+            if git rev-parse --verify origin/gh-pages > /dev/null 2>&1
+            then
+                git checkout gh-pages
+                git rm -rf .
+            else
+                git checkout --orphan gh-pages
+            fi
 
-              cp -a "../${pages_dir}/." .
-              git add -A
-              git commit --allow-empty -m "Deploy to GitHub pages at ${described_rev} [ci skip]"
-              # and push, but send any output to /dev/null to hide anything sensitive
-              git push --force --quiet origin gh-pages > /dev/null 2>&1
-              cd ..
-              rm -rf gh-pages-branch
-              echo "Finished Deployment!"
+            cp -a "../${pages_dir}/." .
+            git add -A
+            git commit --allow-empty -m "Deploy to GitHub pages at ${described_rev} [ci skip]"
+            # and push, but send any output to /dev/null to hide anything sensitive
+            git push --force --quiet origin gh-pages > /dev/null 2>&1
+            cd ..
+            rm -rf gh-pages-branch
+            echo "Finished Deployment!"
 workflows:
   version: 2
   build-and-deploy:
