@@ -4,9 +4,6 @@ jobs:
     docker:
       - image: asciidoctor/docker-asciidoctor
     working_directory: /documents/
-    branches:
-      only: master
-      ignore: gh-pages
     steps:
       - checkout
       - run: mkdir -p output
@@ -20,9 +17,6 @@ jobs:
     docker:
       - image: asciidoctor/docker-asciidoctor
     working_directory: /documents/
-    branches:
-      only: master
-      ignore: gh-pages
     steps:
       - restore_cache:
           key: v1-docs-output-{{ .Environment.CIRCLE_SHA1 }}
