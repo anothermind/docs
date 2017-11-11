@@ -21,7 +21,8 @@ jobs:
     steps:
       - restore_cache:
           key: v1-docs-output-{{ .Environment.CIRCLE_SHA1 }}
-      - deploy:  /documents/.circleci/deploy.sh
+      - deploy:
+          command: /documents/.circleci/deploy.sh
 
 workflows:
   version: 2
