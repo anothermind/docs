@@ -26,7 +26,6 @@ jobs:
             remote=$(git config remote.origin.url)
             described_rev=$(git rev-parse HEAD | git name-rev --stdin)
             pages_dir="/documents/output"
-
             mkdir gh-pages-branch
             cd gh-pages-branch
             git config --global user.email "${CIRCLE_PROJECT_USERNAME}" > /dev/null 2>&1
@@ -40,11 +39,9 @@ jobs:
             else
                 git checkout --orphan gh-pages
             fi
-
             cp -a "../${pages_dir}/." .
             git add -A
             git commit --allow-empty -m "Deploy to GitHub pages at ${described_rev} [ci skip]"
-            # and push, but send any output to /dev/null to hide anything sensitive
             git push --force --quiet origin gh-pages > /dev/null 2>&1
             cd ..
             rm -rf gh-pages-branch
