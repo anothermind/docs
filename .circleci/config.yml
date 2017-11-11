@@ -61,6 +61,12 @@ workflows:
   build-and-deploy:
     jobs:
       build-docs:
+        filters:
+          branches:
+            only: circle
       deploy-github-pages:
         requires:
           - build-docs
+        filters:
+          branches:
+            only: circle
