@@ -1,0 +1,20 @@
+language: none
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    - SOURCES=$SHIPPABLE_REPO_DIR/*.adoc
+    - TARGET_DIR=$SHIPPABLE_REPO_DIR/output
+
+build:
+  pre_ci_boot:
+    image_name: anothermind/docs-builder-image
+    image_tag: latest
+    pull: true
+  ci:
+    - mkdir -p ${TARGET_DIR}
+    - asciidoctor -r asciidoctor-diagram -D ${TARGET_DIR} ${SOURCES}
+    - mv ${TARGET_DIR}/README.html ${TARGET_DIR}/index.html
